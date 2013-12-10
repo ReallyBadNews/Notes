@@ -37,3 +37,10 @@ function submitForm(){
 function hidePost(postID){
 	document.getElementById(postID).style.opacity = "0";
 }
+
+function updateClock(postID){
+	var time = parseInt(document.getElementById(postID).innerHTML) - 1;
+	if ( time > -1 ){
+		document.getElementById(postID).innerHTML = time;
+	}
+}

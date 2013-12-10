@@ -9,29 +9,30 @@
 		<div id="header">NOTES<div class="button" onmouseup="togglePosCover();">+POST</div></div>
 		<div id="noteArea">
 		<?php				
-			$con = mysql_connect("localhost","alexberg_submit","perswerd");
+			$con = mysql_connect("localhost","notes","P0N15d0K3");
 			if (!$con) {
 				die('Could not connect: ' . mysql_error());
 				}
 		
-		    mysql_select_db("alexberg_notes", $con); 							    							    							  							  					    							    
+		    mysql_select_db("notes", $con); 							    							    							  							  					    							    
 	    							
-		    $result = mysql_query("SELECT * FROM `notelist` ORDER BY `idnumber` DESC LIMIT 0, 256 ");
+		    $result = mysql_query("SELECT * FROM `notelist` ORDER BY `ID` DESC LIMIT 0, 256 ");
 		    $idGen = 0;
 		while($row = mysql_fetch_array($result)) {
 			$messageString = $row['message'];
 			$deathTime = $row['deadtime'];
 			$idGen = $idGen + 1;
 			$livetime = ( intval($deathTime) - time() ) * 1000;
+			$displayTime = intval($livetime) / 1000;
 			if ( $deathTime > time() ){
 				if ( substr($messageString,0,3) == substr("http",0,3) ){
 					if ( substr($messageString,-3) == substr(".gif",-3) or substr($messageString,-3) == substr(".png",-3) or substr($messageString,-3) == substr(".jpg",-3) or substr($messageString,-3) == substr(".jpe",-3) or substr($messageString,-3) == substr(".tif",-3)){
-						echo '<script>setTimeout("hidePost(\'post'.$idGen.'\')",'.$livetime.')</script><a href="'.$messageString.'"><div id="post'.$idGen.'" class="note" style="background-image:url('.$messageString.')"></div></a>';
+						echo '<script>setInterval(\'updateClock("post'.$idGen.'Clock")\',1000);setTimeout("hidePost(\'post'.$idGen.'\')",'.$livetime.')</script><a href="'.$messageString.'"><div id="post'.$idGen.'" class="note" style="background-image:url('.$messageString.')"><div id="post'.$idGen.'Clock" class="clock">'.$displayTime.'</div></div></a>';
 					} else {
-						echo '<script>setTimeout("hidePost(\'post'.$idGen.'\')",'.$livetime.')</script><a href="'.$messageString.'"><div id="post'.$idGen.'" class="note" style="background-color:rgba(231,207,255,1); text-decoration:underline;">'.$messageString.'</div></a>';
+						echo '<script>setInterval(\'updateClock("post'.$idGen.'Clock")\',1000);setTimeout("hidePost(\'post'.$idGen.'\')",'.$livetime.')</script><a href="'.$messageString.'"><div id="post'.$idGen.'" class="note" style="background-color:rgba(231,207,255,1); text-decoration:underline;"><div id="post'.$idGen.'Clock" class="clock">'.$displayTime.'</div>'.$messageString.'</div></a>';
 					}
 				} else {
-					echo '<script>setTimeout("hidePost(\'post'.$idGen.'\')",'.$livetime.')</script><div id="post'.$idGen.'" class="note">'.$messageString.'</div>';	
+					echo '<script>setInterval(\'updateClock("post'.$idGen.'Clock")\',1000);setTimeout("hidePost(\'post'.$idGen.'\')",'.$livetime.')</script><div id="post'.$idGen.'" class="note"><div id="post'.$idGen.'Clock" class="clock">'.$displayTime.'</div>'.$messageString.'</div>';	
 				}
 			}
 		} ?>

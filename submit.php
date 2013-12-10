@@ -1,19 +1,19 @@
 <?php
 
 $password = $_POST['password'];
-if ( $password == "publicaccess" ){
+if ( $password == "EmagdniM" ){
 	
 	function clean_string($string) {
       $bad = array("content-type","bcc:","to:","cc:","href","$");
       return str_replace($bad,"",$string);
     }
 
-	$con = mysql_connect("localhost","alexberg_submit","perswerd");
+	$con = mysql_connect("localhost","notes","P0N15d0K3");
 	if (!$con) {
 		die('Could not connect: ' . mysql_error());
 		}
 
-    mysql_select_db("alexberg_notes", $con);
+    mysql_select_db("notes", $con);
 
     $cleanThis = $_POST['textToPost'];
     $cleanThis2 = $_POST['expireTime'];
